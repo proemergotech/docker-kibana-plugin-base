@@ -3,7 +3,8 @@ FROM alpine
 ARG NODE_VERSION=8.11.3
 ARG YARN_VERSION=1.9.4
 
-RUN apk add --no-cache --virtual .build-deps curl make gcc g++ python linux-headers binutils-gold gnupg libstdc++ && \
+RUN apk add --no-cache libstdc++ && \
+  apk add --no-cache --virtual .build-deps curl make gcc g++ python linux-headers binutils-gold gnupg && \
   # Install nodejs
   for server in ipv4.pool.sks-keyservers.net keyserver.pgp.com ha.pool.sks-keyservers.net; do \
     gpg --keyserver $server --recv-keys \
