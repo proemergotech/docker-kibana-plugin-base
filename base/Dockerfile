@@ -1,6 +1,5 @@
 FROM alpine
 
-ARG KIBANA_VERSION=6.3.1
 ARG NODE_VERSION=8.11.3
 ARG YARN_VERSION=1.9.4
 
@@ -25,6 +24,7 @@ RUN apk add --no-cache --virtual .build-deps curl make gcc g++ python linux-head
   ./configure --prefix=/usr && \
   make -j$(getconf _NPROCESSORS_ONLN) && \
   make install && \
+  rm -rf /node-v${NODE_VERSION}* && \
   cd / && \
   # Install yarn
   for server in ipv4.pool.sks-keyservers.net keyserver.pgp.com ha.pool.sks-keyservers.net; do \
@@ -39,14 +39,6 @@ RUN apk add --no-cache --virtual .build-deps curl make gcc g++ python linux-head
   ln -s /usr/local/share/yarn/bin/yarn /usr/local/bin/ && \
   ln -s /usr/local/share/yarn/bin/yarnpkg /usr/local/bin/ && \
   rm yarn-v${YARN_VERSION}.tar.gz* && \
-  # Install kibana
-  curl -sLO https://github.com/elastic/kibana/archive/v$KIBANA_VERSION.tar.gz && \
-  tar -xzf v$KIBANA_VERSION.tar.gz && \
-  rm -f v$KIBANA_VERSION.tar.gz && \
-  mv kibana-$KIBANA_VERSION /kibana && \
-  cd /kibana && \
-  yarn kbn bootstrap && \
   # Remove build deps
-  apk del .build-deps
-
-WORKDIR /kibana
+  apk del .build-deps && \
+  rm -rf /tmp/*
