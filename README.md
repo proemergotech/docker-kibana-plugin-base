@@ -1,4 +1,4 @@
-# docker-kibana-plugin-base
+# Kibana Plugin Builder
 
 Base docker image for easier kibana plugin development.
 
