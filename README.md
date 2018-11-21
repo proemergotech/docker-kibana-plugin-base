@@ -15,7 +15,7 @@ FROM proemergotech/kibana-plugin-builder:$KIBANA_VERSION as builder
 
 # this must match kibana.version in package.json
 ARG KIBANA_VERSION
-# this must match the repository name
+# this must match the root directory name of the plugin
 ARG PLUGIN_NAME=<YOUR PROJECT NAME>
 # this must match version in package.json
 ARG PLUGIN_VERSION=<YOUR PROJECT VERSION>
@@ -44,6 +44,7 @@ ARG KIBANA_VERSION
 
 FROM proemergotech/kibana-plugin-builder:$KIBANA_VERSION
 
+# this must match the root directory name of the plugin
 ARG PLUGIN_NAME=<YOUR PROJECT NAME>
 
 EXPOSE 5601
